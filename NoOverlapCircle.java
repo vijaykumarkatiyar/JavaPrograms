@@ -5,8 +5,6 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.geom.Area;
 import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -28,21 +26,22 @@ public class NoOverlapCircle extends JPanel {
     	super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g.create();
         Random random=new Random();
-        int x[]=new int[25];
-    	int y[]=new int[25];
-        for(int i=0;i<25;i++)
+        int x[]=new int[300];
+    	int y[]=new int[300];
+        for(int i=0;i<300;i++)
     	{
     		 x[i]=random.nextInt(width);
         	 y[i]=random.nextInt(height);
     	}
-        for(int i=0;i<25;i++)
+        for(int i=0;i<300;i++)
     	{
-    	for(int j=0;j<25;j++)
+        int randw=random.nextInt(50);
+    	for(int j=0;j<300;j++)
     	{
     		if(j!=i)
     		{    
-    		 r1 = new Rectangle(x[i], y[i], 50, 50);
-             r2 = new Rectangle(x[j], y[j], 50, 50);
+    		 r1 = new Rectangle(x[i], y[i], randw, randw);
+             r2 = new Rectangle(x[j], y[j], randw, randw);
              System.out.println(flag+"-----------------------------------------------");
               overlap=r1.intersects(r2);
               if(overlap==true)
@@ -53,8 +52,14 @@ public class NoOverlapCircle extends JPanel {
     		
     	}
     	System.out.println(flag);
+    	int r=random.nextInt(255);
+    	int gr=random.nextInt(255);
+    	int b=random.nextInt(255);
+    	Color c1=new Color(r,gr,b);
     	if(flag==false)
     	{
+    		
+        	g2d.setColor(c1);
     		g2d.draw(r1);
     	}
     	flag=false;
