@@ -1,0 +1,103 @@
+Imports System.Data.OleDb
+Public Class Form1
+
+    Dim myconnection As OleDbConnection = New OleDbConnection
+
+
+    Private Sub RichTextBox33_TextChanged(sender As System.Object, e As System.EventArgs) Handles RichTextBox33.TextChanged, RichTextBox35.TextChanged
+
+    End Sub
+
+    Private Sub Form1_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        'TODO: This line of code loads data into the 'InventoryDataSet.Coustmer_Details' table. You can move, or remove it, as needed.
+        Me.Coustmer_DetailsTableAdapter.Fill(Me.InventoryDataSet.Coustmer_Details)
+
+
+    End Sub
+
+    Private Sub RichTextBox14_TextChanged(sender As System.Object, e As System.EventArgs) Handles RichTextBox14.TextChanged
+
+    End Sub
+
+    Private Sub Button4_Click(sender As System.Object, e As System.EventArgs) Handles Button4.Click
+        Me.CoustmerDetailsBindingSource.MoveNext()
+
+    End Sub
+
+    Private Sub Button5_Click(sender As System.Object, e As System.EventArgs) Handles Button5.Click
+        Me.CoustmerDetailsBindingSource.MovePrevious()
+    End Sub
+
+    Private Sub Button6_Click(sender As System.Object, e As System.EventArgs) Handles Button6.Click
+        Me.CoustmerDetailsBindingSource.RemoveCurrent()
+    End Sub
+
+    Private Sub Button2_Click(sender As System.Object, e As System.EventArgs) Handles Button2.Click
+        Me.CoustmerDetailsBindingSource.AddNew()
+    End Sub
+
+    Private Sub Button3_Click(sender As System.Object, e As System.EventArgs) Handles Button3.Click
+        On Error GoTo ERRORMESSAGE
+        Me.Validate()
+        Me.CoustmerDetailsBindingSource.EndEdit()
+        Me.Coustmer_DetailsTableAdapter.Update(Me.InventoryDataSet)
+        MsgBox("save successfully")
+ERRORMESSAGE:
+        MsgBox("check the record", vbInformation)
+
+
+    End Sub
+
+
+
+    Private Sub lgnbtn_Click(sender As System.Object, e As System.EventArgs) Handles lgnbtn.Click
+        Dim username As String
+        Dim password As String
+        Dim provider As String
+        Dim dataFile As String
+        Dim connString As String
+        Dim userFound As Boolean
+        Dim conn As New OleDb.OleDbConnection
+        provider = "Provider=Microsoft.ACE.OLEDB.12.0;"
+        dataFile = "Data Source=C:\Users\Amol\Desktop\login.accdb"
+        connString = provider & dataFile
+        conn.ConnectionString = connString
+        conn.Open()
+        Dim cmd As OleDbCommand = New OleDbCommand("SELECT * FROM login", conn)
+        Dim dr As OleDbDataReader = cmd.ExecuteReader
+        While dr.Read
+            username = dr("username").ToString
+            password = dr("password").ToString
+
+            If (TextBox1.Text = username And TextBox2.Text = password) Then
+                userFound = True
+            End If
+            Console.WriteLine(username)
+            Console.WriteLine(password)
+
+        End While
+        If (userFound = True ) Then
+            GroupBox2.Visible = False
+        End If
+
+
+
+    End Sub
+
+    Private Sub Panel1_Paint(sender As System.Object, e As System.Windows.Forms.PaintEventArgs) Handles Panel1.Paint
+        Panel1.BackColor = Color.FromArgb(200, Color.Black)
+        Label11.BackColor = Color.Transparent
+        Label15.BackColor = Color.Transparent
+        inventory.BackColor = Color.Transparent
+
+
+    End Sub
+
+    Private Sub Label11_Click(sender As System.Object, e As System.EventArgs) Handles Label11.Click
+
+    End Sub
+
+    Private Sub GroupBox2_Enter(sender As System.Object, e As System.EventArgs) Handles GroupBox2.Enter
+
+    End Sub
+End Class
